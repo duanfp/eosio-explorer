@@ -5,7 +5,7 @@ import { CardBody, Row, Col, Form, FormGroup, FormFeedback, Label, Input,
 } from 'reactstrap';
 
 import { updateActionToPush, prefillActionToPush, actionPush, fetchStart, fetchSmartContracts,paramsSet,fetchAbi, fetchActionData } from './PushactionPageReducer';
-import { CodeViewer, LoadingSpinner } from 'components';
+import { CodeViewer, LoadingSpinner } from '../../components';
 import useForm from '../../helpers/useForm';
 import validate from './components/PushActionValidatorEngine/PushActionValidatorEngine';
 import { StandardTemplate } from '../../templates';

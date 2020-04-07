@@ -4,9 +4,9 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 
 import Terminal from 'terminal-in-react';
-import { CardHeaderStyled } from 'styled';
+import { CardHeaderStyled } from '../../styled';
 
-import { panelSet, logReset } from 'reducers/errorlog';
+import { panelSet, logReset } from '../../reducers/errorlog';
 
 class ConsoleLogger extends Component {
 

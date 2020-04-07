@@ -20,6 +20,7 @@ class InfoPage extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     if (navigator.userAgent === 'ReactSnap') {
       this.state = {
         modalIsOpen: false
@@ -53,12 +54,12 @@ class InfoPage extends Component {
             <Col xs="12">
               <FirstCardStyled>
                 <CardHeaderStyled>
-                  Connections
+                  Connections111
                 </CardHeaderStyled>
                 <CardBody>
                   <InputStyled
                     type="text"
-                    defaultValue={this.props.nodeos}
+                    defaultValue={this.props}
                     disabled
                   />
                 </CardBody>

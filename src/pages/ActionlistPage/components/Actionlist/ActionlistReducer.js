@@ -9,9 +9,9 @@ import { of } from 'rxjs';
 import { mergeMap, mapTo, map, catchError } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
 
-import apiPostgres from 'services/api-postgres';
-import { errorLog } from 'helpers/error-logger';
-import paramsToQuery from 'helpers/params-to-query';
+import apiPostgres from '../../../../services/api-postgres';
+import { errorLog } from '../../../../helpers/error-logger';
+import paramsToQuery from '../../../../helpers/params-to-query';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app
@@ -42,7 +42,7 @@ const fetchEpic = ( action$, state$ ) => action$.pipe(
       params.account_name = smartContractName.toLowerCase();
 
     let query = paramsToQuery(params);
-    
+
     return apiPostgres(`get_actions${query}`).pipe(
       map(res => fetchFulfilled(res.response)),
       catchError(error => {

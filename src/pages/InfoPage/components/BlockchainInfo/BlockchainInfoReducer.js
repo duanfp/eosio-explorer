@@ -10,9 +10,10 @@ import { mergeMap, map, flatMap, catchError } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
 
-import apiRpc from 'services/api-rpc';
-import { errorLog } from 'helpers/error-logger';
-import { accountClear } from 'reducers/permission';
+import apiRpc from '../../../../services/api-rpc';
+import { errorLog } from '../../../../helpers/error-logger';
+import { accountClear } from '../../../../reducers/permission';
+import { JsonRpc } from 'eosjs';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app

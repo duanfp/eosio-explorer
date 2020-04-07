@@ -7,8 +7,10 @@ import apiRpc from '@eosio-toppings/api-rpc';
 const apiRpcCall = async ( apiPath, query={} ) => {
 
   try{
+    console.error("store.......");
+    console.error(store);
     const state = store.getState();
-
+    console.error('state : = : ' + state);
     let { permission: { data: { list, defaultId }}} = state;
 
     // Get private key of the currently selected permission

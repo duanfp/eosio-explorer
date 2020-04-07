@@ -27,8 +27,6 @@ if ( currentLastTimestamp ){
 
 }
 
-console.log(store);
-
 const AppBundle = (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

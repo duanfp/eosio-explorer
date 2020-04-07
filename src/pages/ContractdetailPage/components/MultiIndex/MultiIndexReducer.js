@@ -10,9 +10,9 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
 
-import apiRpc from 'services/api-rpc';
-import { errorLog } from 'helpers/error-logger';
-import isObjectEmpty from 'helpers/is-object-empty';
+import apiRpc from '../../../../services/api-rpc';
+import { errorLog } from '../../../../helpers/error-logger';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app

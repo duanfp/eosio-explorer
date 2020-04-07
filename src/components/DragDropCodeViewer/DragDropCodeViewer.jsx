@@ -4,13 +4,13 @@ import React, { Component } from 'react';
 import { Jumbotron } from 'reactstrap';
 import Dropzone from 'react-dropzone';
 
-import { ButtonPrimary } from 'styled';
+import { ButtonPrimary } from '../../styled';
 
 import styled from 'styled-components';
 import CodeViewer from '../../components/CodeViewer';
 
-const DragDropSVG = ({className}) => 
-  <svg {...{className}} width="36px" height="52px" viewBox="0 0 36 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">    
+const DragDropSVG = ({className}) =>
+  <svg {...{className}} width="36px" height="52px" viewBox="0 0 36 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
     <defs>
         <polygon id="path-1" points="0 0.0600315769 31 0.0600315769 31 47.1272385 0 47.1272385"></polygon>
     </defs>
@@ -77,7 +77,7 @@ const DragDropSVGStyled = styled(DragDropSVG)`
 class DragDropCodeViewer extends Component {
   constructor() {
     super();
-    this.state = { 
+    this.state = {
       value: ""
     }
   }
@@ -87,7 +87,7 @@ class DragDropCodeViewer extends Component {
       value: this.props.value
     });
   }
-  
+
   editorDidMount(editor, monaco) {
     editor.focus();
     this.editor = editor;
@@ -131,13 +131,13 @@ class DragDropCodeViewer extends Component {
     });
     this.props.onChange && this.props.onChange(newValue);
   }
-  
+
   render() {
     return (
       <>
         <div className={"dragDropCodeViewerContainer " + (this.state.value && this.state.value !== "" ? "hasFileData" : "")} >
-          <Dropzone onDrop={([file]) => this.onDrop(file)} 
-            accept={'.cpp'} 
+          <Dropzone onDrop={([file]) => this.onDrop(file)}
+            accept={'.cpp'}
             >
             {({getRootProps, getInputProps}) => (
               <section className="dropzone">
@@ -145,7 +145,7 @@ class DragDropCodeViewer extends Component {
                   <input {...getInputProps()} />
                     <Jumbotron>
                       {
-                        this.state.value && this.state.value !== "" 
+                        this.state.value && this.state.value !== ""
                         ? <DivFlexStyled>
                             <DragDropSVGStyled />
                             <label>Drag &amp; Drop files here or click browse to choose a file.</label>
@@ -154,28 +154,28 @@ class DragDropCodeViewer extends Component {
                         : <div>
                             <ImageDiv className="text-center">
                               <DragDropSVG />
-                            </ImageDiv>   
-                            <br />                   
+                            </ImageDiv>
+                            <br />
                             <p id="ddLabel" className="lead text-center">Drag &amp; Drop files here or<br/> click browse to choose a file.</p>
                             <br />
                             <p className="lead text-center browseButton">
                               <ButtonPrimary onClick={(e) => e.preventDefault()} >BROWSE</ButtonPrimary>
                             </p>
-                          </div>                          
-                      }                 
-                      
+                          </div>
+                      }
+
                     </Jumbotron>
                 </div>
               </section>
             )}
           </Dropzone>
-            <CodeViewer 
+            <CodeViewer
               height={this.props.height}
               width={this.props.width}
               readOnly={this.props.readOnly}
               value={this.state.value}
               language="cpp"
-              onChange={(newVal) => this.onChange(newVal)} 
+              onChange={(newVal) => this.onChange(newVal)}
               editorDidMount={(editor, monaco) => this.editorDidMount(editor, monaco)} />
           </div>
       </>

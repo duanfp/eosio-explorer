@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
     enhancers.push(devToolsExtension());
   }
 }
-console.log(middleware);
+
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
   ...enhancers
@@ -43,10 +43,7 @@ const store = createStore(
   initialState,
   composedEnhancers
 )
-console.log(store);
 export const persistor = persistStore(store);
-console.log(persistor);
 epicMiddleware.run(rootEpic);
-console.log(epicMiddleware);
 
 export default store;

@@ -9,9 +9,9 @@ import { of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
-import apiPostgres from 'services/api-postgres';
-import { errorLog } from 'helpers/error-logger';
-import paramsToQuery from 'helpers/params-to-query';
+import apiPostgres from '../services/api-postgres';
+import { errorLog } from '../helpers/error-logger';
+import paramsToQuery from '../helpers/params-to-query';
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app
 const actionPrefix = `endpoint/`;
@@ -27,7 +27,7 @@ export const connectFulfilled = payload => ({ type: CONNECT_FULFILLED, payload }
 // Epic
 const connectEpic = ( action$, state$ ) => action$.pipe(
   ofType(CONNECT_START),
-  mergeMap(action =>{   
+  mergeMap(action =>{
     let query = paramsToQuery({ port: process.env.REACT_APP_POSTGRES_DB_PORT });
     return apiPostgres(`connectToDB${query}`).pipe(
       map(res => {
@@ -47,8 +47,8 @@ export const combinedEpic = combineEpics(
 
 //Reducer
 let hostname = window.location.hostname;
-export const pathInitState = {  
-  nodeos: `http://${hostname}:8888`
+export const pathInitState = {
+  nodeos: `http://47.107.138.103:8888`
 }
 
 const pathReducer = (state=pathInitState, action) => {

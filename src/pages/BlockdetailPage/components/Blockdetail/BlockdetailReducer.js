@@ -10,9 +10,9 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
 
-import apiPostgres from 'services/api-postgres';
-import paramsToQuery from 'helpers/params-to-query';
-import { errorLog } from 'helpers/error-logger';
+import apiPostgres from '../../../../services/api-postgres';
+import paramsToQuery from '../../../../helpers/params-to-query';
+import { errorLog } from '../../../../helpers/error-logger';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app
@@ -42,7 +42,7 @@ const fetchEpic = ( action$, state$ ) => action$.pipe(
       ...params,
       endpoint: nodeos
     }
-    
+
     return apiPostgres(`get_block_details${paramsToQuery(params)}`).pipe(
       map(res => fetchFulfilled(res.response)),
       catchError(error => {

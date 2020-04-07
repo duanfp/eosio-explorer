@@ -4,18 +4,18 @@ import {
 } from 'reactstrap';
 import cogoToast from 'cogo-toast';
 
-import { StandardTemplate } from '../../../../templates';
+import { StandardTemplate } from '../../templates';
 import { connect } from 'react-redux';
 
-import BasicModal from '../../../../components/BasicModal';
+import BasicModal from '../../components/BasicModal';
 import CreateAccount from './components/CreateAccount';
 import Permissionlist from './components/Permissionlist';
 import ImportAccount from './components/ImportAccount';
 
 import { panelSelect } from './PermissionPageReducer';
-import { fetchStart, accountClear } from '../../../../reducers/permission';
+import { fetchStart, accountClear } from '../../reducers/permission';
 import styled from 'styled-components';
-import { PageTitleDivStyled, ButtonGroupSeperated, ButtonPrimary, ButtonSecondary, ToolTipStyled, ErrorDivStyled } from '../../../../styled';
+import { PageTitleDivStyled, ButtonGroupSeperated, ButtonPrimary, ButtonSecondary, ToolTipStyled, ErrorDivStyled } from '../../styled';
 
 const CustomButtonPrimary = styled(ButtonPrimary)`
   padding-top: 4px;
