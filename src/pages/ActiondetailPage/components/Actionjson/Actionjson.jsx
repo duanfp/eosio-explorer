@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { CodeViewer } from 'components';
+import { CodeViewer } from '../../../../components';
 
 const Actionjson = (props) => {
 
@@ -16,7 +16,7 @@ const Actionjson = (props) => {
           value={JSON.stringify(payload, null, 2)}
           readOnly={true}
           height={600} />
-      }              
+      }
     </>
   );
 }

@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { 
+import {
   Row, Col
 } from 'reactstrap';
 import cogoToast from 'cogo-toast';
 
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../../../templates';
 import { connect } from 'react-redux';
 
-import BasicModal from 'components/BasicModal';
+import BasicModal from '../../../../components/BasicModal';
 import CreateAccount from './components/CreateAccount';
 import Permissionlist from './components/Permissionlist';
 import ImportAccount from './components/ImportAccount';
 
 import { panelSelect } from './PermissionPageReducer';
-import { fetchStart, accountClear } from 'reducers/permission';
+import { fetchStart, accountClear } from '../../../../reducers/permission';
 import styled from 'styled-components';
-import { PageTitleDivStyled, ButtonGroupSeperated, ButtonPrimary, ButtonSecondary, ToolTipStyled, ErrorDivStyled } from 'styled';
+import { PageTitleDivStyled, ButtonGroupSeperated, ButtonPrimary, ButtonSecondary, ToolTipStyled, ErrorDivStyled } from '../../../../styled';
 
 const CustomButtonPrimary = styled(ButtonPrimary)`
   padding-top: 4px;
@@ -45,7 +45,7 @@ class PermissionPage extends Component {
     props.panelSelect("permission-list");
     window.scrollTo(0,0);
 
-  } 
+  }
 
   toggleResetTooltip () {
     this.setState({
@@ -74,14 +74,14 @@ class PermissionPage extends Component {
       });
     }
 
-    // Change panel 
+    // Change panel
     function changePanel (panel) {
       panelSelect(panel);
     }
-    
+
     return (
       <StandardTemplate>
-        <div className="PermissionPage ">          
+        <div className="PermissionPage ">
           <Row>
             <Col sm="12">
               <Row>
@@ -115,7 +115,7 @@ class PermissionPage extends Component {
               <br/>
               <Row>
                 {
-                  (chain_id !== 'NONE') 
+                  (chain_id !== 'NONE')
                   ? (<Col sm={12}>
                     { panel === "permission-list" ? <Permissionlist/>
                       : panel === "create-account" ? <CreateAccount/>

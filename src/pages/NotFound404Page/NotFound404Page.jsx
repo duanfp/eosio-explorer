@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 
 
 class NotFound404Page extends Component {
   render() {
     return (
-      <StandardTemplate>        
+      <StandardTemplate>
         <div style={{height: '100vh'}}></div>
       </StandardTemplate>
     );

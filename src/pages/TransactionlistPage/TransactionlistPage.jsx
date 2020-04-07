@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import Transactionlist from './components/Transactionlist';
-import { PageTitleDivStyled } from 'styled';
+import { PageTitleDivStyled } from '../../styled';
 
 class TransactionlistPage extends Component {
 

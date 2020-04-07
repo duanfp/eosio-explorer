@@ -6,7 +6,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Cookies from 'js-cookie';
 
 import store, { history, persistor } from 'store';
-import App from 'app';
 
 // Set the current timestamp from cookie -> process.env -> default empty
 const currentLastTimestamp = Cookies.get('lastTimestamp') || process.env.REACT_APP_LAST_INIT_TIMESTAMP || "";
@@ -28,12 +27,14 @@ if ( currentLastTimestamp ){
 
 }
 
+console.log(store);
+
 const AppBundle = (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ConnectedRouter history={history}>
         <>
-          <App/>
+
           <div id="modal"></div>
         </>
       </ConnectedRouter>

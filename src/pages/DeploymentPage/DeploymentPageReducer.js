@@ -5,8 +5,8 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
 
-import { errorLog } from 'helpers/error-logger';
-const ENDPOINT = `http://localhost:${process.env.REACT_APP_LOCAL_SERVICE_PORT}/api/eosio/`;
+import { errorLog } from '../../helpers/error-logger';
+const ENDPOINT = `http://47.107.138.103:${process.env.REACT_APP_LOCAL_SERVICE_PORT}/api/eosio/`;
 
 const actionPrefix = `deployment/`;
 

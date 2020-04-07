@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import { fetchStart, paramsSet } from './BlockdetailReducer';
-import pathNameConsumer from 'helpers/pathname-consumer';
-import isObjectEmpty from 'helpers/is-object-empty';
+import pathNameConsumer from '../../../../helpers/pathname-consumer';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
 import { CardBody, Col, Row, Form, FormGroup} from 'reactstrap';
 import styled from 'styled-components';
-import { CodeViewer, LoadingSpinner } from 'components';
-import { CardStyled, CardHeaderStyled, TableStyled, ErrorDivStyled, ButtonPrimary, ErrorButton} from 'styled';
+import { CodeViewer, LoadingSpinner } from '../../../../components';
+import { CardStyled, CardHeaderStyled, TableStyled, ErrorDivStyled, ButtonPrimary, ErrorButton} from '../../../../styled';
 
 
 const FirstCardStyled = styled(CardStyled)`
@@ -29,15 +29,15 @@ const Blockdetail = (props) => {
 
   let { blockdetail: { isFetching, data, params } } = props;
   let { payload, error } = data;
-  
+
   return (
     <div className="Blockdetail">
-      <div>{ error ? 
+      <div>{ error ?
                 <>
                   {!isObjectEmpty(error) && <p className="text-danger">{JSON.stringify(error)}</p>}
                   <ErrorButton onClick={props.fetchStart}>Connection error, click to reload</ErrorButton>
                 </>
-              : isFetching 
+              : isFetching
                 ? <LoadingSpinner />
                 : payload.length > 0
                   ? <div>
@@ -46,7 +46,7 @@ const Blockdetail = (props) => {
                           <FirstCardStyled>
                             <CardHeaderStyled>Block Detail</CardHeaderStyled>
                             <CardBody>
-                              <Form> 
+                              <Form>
                                 <FormGroup row>
                                   <Col sm={2}>Block Number:</Col>
                                   <Col sm={10} className="hashText">
@@ -87,23 +87,23 @@ const Blockdetail = (props) => {
                                 <thead>
                                   <tr>
                                     <th width="16%">Index</th>
-                                    <th width="84%">Transaction ID</th>                                    
+                                    <th width="84%">Transaction ID</th>
                                   </tr>
                                 </thead>
                                 <tbody className="hashText">
                                   {(payload[0].transactions).map((eachTransaction,index)=>
-                                    <tr key={index} 
+                                    <tr key={index}
                                         onClick={evt=> props.push(`/transaction/${eachTransaction.trx.id}`)}>
                                       <td>{index+1}</td>
-                                      <td>{eachTransaction.trx.id}</td>                                      
+                                      <td>{eachTransaction.trx.id}</td>
                                     </tr>)}
                                 </tbody>
-                                </CustomTable>                               
+                                </CustomTable>
                               </CardBody>
                             </CardStyled>
                           </Col>
                         </Row>
-                      }  
+                      }
                       <Row>
                         <Col sm="12">
                           <CardStyled>
@@ -114,7 +114,7 @@ const Blockdetail = (props) => {
                                 value={JSON.stringify(payload[0], null, 2)}
                                 readOnly={true}
                                 height={600}
-                              />  
+                              />
                             </CardBody>
                           </CardStyled>
                         </Col>
@@ -126,12 +126,12 @@ const Blockdetail = (props) => {
                         <ErrorDivStyled>No Block found with Block ID or Block Number {params.id_or_num} <br/><br/>
                           <ButtonPrimary
                             onClick={evt=> props.push(`/block-list`)}>Back
-                          </ButtonPrimary>           
-                        </ErrorDivStyled>           
+                          </ButtonPrimary>
+                        </ErrorDivStyled>
                       </CardBody>
                     </CardStyled>
-                  
-                }    
+
+                }
       </div>
     </div>
   );

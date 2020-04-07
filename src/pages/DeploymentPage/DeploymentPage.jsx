@@ -4,25 +4,25 @@ import {
   CardBody, Row, Col, Spinner,
   Nav, NavLink, NavItem, TabContent, TabPane,
   Form, FormGroup, Label, Badge,
-  DropdownToggle, DropdownMenu, DropdownItem  
+  DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import { connect } from 'react-redux';
-import { fetchStart as permissionFetchStart} from 'reducers/permission';
+import { fetchStart as permissionFetchStart} from '../../reducers/permission';
 import InputInstructions from './components/InputInstructions';
-import { DragDropCodeViewer, CodeViewer } from 'components';
+import { DragDropCodeViewer, CodeViewer } from '../../components';
 import {
   CardStyled, CardHeaderStyled, PageTitleDivStyled,
   InputStyled, ButtonPrimary, ToolTipUncontrolledStyled, ToolTipStyled,
   DropdownStyled, OverlayStyled, ButtonGroupSeperated
-} from 'styled';
+} from '../../styled';
 import cogoToast from 'cogo-toast';
 
-import { defaultSet } from 'reducers/permission';
+import { defaultSet } from '../../reducers/permission';
 import { folderSet, abiImport, contractCompile, contractDeploy, logClear, outputClear } from './DeploymentPageReducer';
 
-const ToolTipSVG = () => 
-  <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">   
+const ToolTipSVG = () =>
+  <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
     <g id="Final-Version" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Artboard" transform="translate(-93.000000, -44.000000)">
           <g id="Group-15" transform="translate(93.000000, 44.000000)">
@@ -100,8 +100,8 @@ const DEPLOY_STATE = 2;
  * Sometimes the string looks the same but has isolates mixed into it
  * So we regenerate the string if it contains byte code equal or less than
  * the standard 128
- * 
- * @param {string} Filepath 
+ *
+ * @param {string} Filepath
  */
 
 const sanitizeFilepath = filepath => {
@@ -286,12 +286,12 @@ const DeploymentPage = (props) => {
                     <DragDropCodeViewer
                       readOnly={true}
                       setCurrentFile={setCurrentFile}
-                    /> 
+                    />
                     <DivFlexStyled>
                       <LabelStyled> Root&nbsp;Folder&nbsp;Path: </LabelStyled>&nbsp;&nbsp;
                       <LabelStyled id="rootFolder"><ToolTipSVG /></LabelStyled>&nbsp;&nbsp;
                       <InputStyled type="text"
-                            name="rootFolder"                            
+                            name="rootFolder"
                             value={path}
                             onChange={(ev) => handleChange(ev)} />
                     </DivFlexStyled>
@@ -385,7 +385,7 @@ const DeploymentPage = (props) => {
                     </Label>
                     <Col xs="4" sm="6">
                       <DropdownStyled
-                        isOpen={isOpenDropDown} 
+                        isOpen={isOpenDropDown}
                         toggle={() => { toggleDropDown(!isOpenDropDown) }}
                         style={{width: "100%"}}>
                         <DropdownToggle style={{width: "100%"}} caret={noOfPermissions > 0}>

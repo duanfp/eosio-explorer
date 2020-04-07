@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 
 import { fetchStart, paramsSet } from './ContractdetailReducer';
 import MultiIndex from '../MultiIndex';
-import pathNameConsumer from 'helpers/pathname-consumer';
+import pathNameConsumer from '../../../../helpers/pathname-consumer';
 import { push } from 'connected-react-router'
 
 import { Row, Col, CardBody } from 'reactstrap';
 import styled from 'styled-components';
-import { CodeViewer, LoadingSpinner } from 'components';
-import { CardStyled, CardHeaderStyled, ButtonPrimary, ErrorDivStyled, InputStyled} from 'styled';
+import { CodeViewer, LoadingSpinner } from '../../../../components';
+import { CardStyled, CardHeaderStyled, ButtonPrimary, ErrorDivStyled, InputStyled} from '../../../../styled';
 
 const FirstCardStyled = styled(CardStyled)`
   border-top: solid 2px #1173a4;
@@ -48,22 +48,22 @@ const Contractdetail = (props) => {
     }else{
       setShowDetailsSection(true)
       props.paramsSet({account_name:  pathNameConsumer(pathname) });
-      props.fetchStart();  
-    }       
-  }, [])  
-  
+      props.fetchStart();
+    }
+  }, [])
+
   let { contractdetail: { isFetching, data, params } } = props;
   let { payload, error } = data;
 
   return (
     <div className="Contractdetail">
-      <Row> 
+      <Row>
         <Col sm="12">
           <FirstCardStyled>
             <CardHeaderStyled>Search Smart Contract</CardHeaderStyled>
             <CardBody>
               <DivFlexStyled>
-                <SearchInputStyled 
+                <SearchInputStyled
                       placeholder="Smart Contract Name"
                       value={inputValue}
                       onKeyDown={
@@ -76,35 +76,35 @@ const Contractdetail = (props) => {
                         }
                       }
                       onChange={evt=>{setInputValue(evt.target.value)}}/>
-                <ButtonPrimary                    
+                <ButtonPrimary
                       onClick={evt=> {
                         setInputValue("")
                         if(inputValue !== "")
-                          props.push('/contract/'+inputValue)                         
+                          props.push('/contract/'+inputValue)
                       }}>
                 SEARCH</ButtonPrimary>
               </DivFlexStyled>
             </CardBody>
           </FirstCardStyled>
-               
-        </Col>                
+
+        </Col>
       </Row>
 
-      {showDetailsSection && 
+      {showDetailsSection &&
         <div>
           {error
             ? <CustomErrorDiv>No Smart Contract found with Smart Contract Name {params.account_name}</CustomErrorDiv>
-            : isFetching 
+            : isFetching
               ? <LoadingSpinner />
-              : (Object.keys(payload).length !== 0 && payload.hasOwnProperty("abi") === true) 
+              : (Object.keys(payload).length !== 0 && payload.hasOwnProperty("abi") === true)
                 ? <div>
-                    <Row> 
+                    <Row>
                       <Col sm="12">
                         <CardStyled>
                           <CardHeaderStyled>Smart Contract Detail</CardHeaderStyled>
                           <CardBody>
                             <DivHeaderStyled>Smart Contract Name:&nbsp;{payload.account_name}</DivHeaderStyled>
-                            <CodeViewer 
+                            <CodeViewer
                               language="json"
                               value={JSON.stringify(payload.abi, null, 2)}
                               readOnly={true}
@@ -113,15 +113,15 @@ const Contractdetail = (props) => {
                           </CardBody>
                         </CardStyled>
                       </Col>
-                    </Row>  
-                    
-                    { payload.abi.tables.length === 0 
+                    </Row>
+
+                    { payload.abi.tables.length === 0
                       ? <DivMessageStyled>No Multi-Index table present for this contract</DivMessageStyled>
                       : <MultiIndex abiData={payload} />}
-                  </div> 
-            : <CustomErrorDiv>No Smart Contract found with Smart Contract Name {params.account_name}</CustomErrorDiv>           
-          } 
-        </div>    
+                  </div>
+            : <CustomErrorDiv>No Smart Contract found with Smart Contract Name {params.account_name}</CustomErrorDiv>
+          }
+        </div>
       }
     </div>
   );

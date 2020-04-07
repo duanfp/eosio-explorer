@@ -9,8 +9,8 @@ import { of } from 'rxjs';
 import { mergeMap, throttleTime } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
-import { FETCH_FULFILLED as HEADBLOCK_FETCH_FULFILLED } from 'reducers/headblock';
-import { FETCH_FULFILLED as LASTBLOCKINFO_FETCH_FULFILLED } from 'reducers/lastblockinfo';
+import { FETCH_FULFILLED as HEADBLOCK_FETCH_FULFILLED } from '../../../../reducers/headblock';
+import { FETCH_FULFILLED as LASTBLOCKINFO_FETCH_FULFILLED } from '../../../../reducers/lastblockinfo';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app
@@ -68,7 +68,7 @@ const reducer = (state=initState, action) => {
   switch (action.type) {
     case LAST_STORE:
       let status = {}
-      
+
       status.headblockStatus = STATUS_NORMAL;
       if ( !(state.last.headblockNum === 0) && ( typeof action.curr.headblockNum === "undefined" || action.curr.headblockNum === state.last.headblockNum )){
         status.headblockStatus = STATUS_STOPPED;

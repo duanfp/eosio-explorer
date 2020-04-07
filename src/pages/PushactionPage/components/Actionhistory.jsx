@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { LoadingSpinner, LimitSelectDropdown } from 'components';
+import { LoadingSpinner, LimitSelectDropdown } from '../../../components';
 import styled from 'styled-components';
-import { TableStyled, ButtonPrimary, DropdownStyled, ButtonSecondary, ExclamationIconStyled, SuccessIconStyled, ToolTipUncontrolledStyled } from 'styled';
+import { TableStyled, ButtonPrimary, DropdownStyled, ButtonSecondary, ExclamationIconStyled, SuccessIconStyled, ToolTipUncontrolledStyled } from '../../../styled';
 import { recordsUpdate, filterUpdate } from '../PushactionPageReducer';
 
 const CustomButton = styled(ButtonPrimary)`

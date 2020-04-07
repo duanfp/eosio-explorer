@@ -7,13 +7,13 @@ import cogoToast from 'cogo-toast';
 
 import { connect } from 'react-redux';
 
-import { accountAdd, accountEdit } from 'reducers/permission';
-import { panelSelect } from 'pages/PermissionPage/PermissionPageReducer';
+import { accountAdd, accountEdit } from '../../../../reducers/permission';
+import { panelSelect } from '../../../../pages/PermissionPage/PermissionPageReducer';
 import importValidate from './ImportAccountValidatorEngine/ImportAccountValidatorEngine';
 import editValidate from './EditAccountValidatorEngine/EditAccountValidatorEngine';
-import useForm from 'helpers/useForm';
-import { CardStyled, CardHeaderStyled, ButtonPrimary, ButtonSecondary, InputStyled, 
-  OverlayStyled, InfoDivStyled, ButtonGroupSeperated } from 'styled';
+import useForm from '../../../../helpers/useForm';
+import { CardStyled, CardHeaderStyled, ButtonPrimary, ButtonSecondary, InputStyled,
+  OverlayStyled, InfoDivStyled, ButtonGroupSeperated } from '../../../../styled';
 import styled from 'styled-components';
 
 const FirstCardStyled = styled(CardStyled)`
@@ -94,7 +94,7 @@ const ImportAccount = (props) => {
 
   useEffect(() => {
     const vals = (keysData) ? [
-      { name: "privateKey", value: keysData[0].private_key },      
+      { name: "privateKey", value: keysData[0].private_key },
       { name: "publicKey", value: keysData[0].public_key }
     ] : [
         { name: "privateKey", value: "No private key" },
@@ -135,7 +135,7 @@ const ImportAccount = (props) => {
               }
               {
                 ((!creationSuccess) && submitError) ?
-                  <UncontrolledAlert color="danger"> 
+                  <UncontrolledAlert color="danger">
                     Error updating the account keys: {submitError}
                   </UncontrolledAlert>
                 : null
@@ -160,8 +160,8 @@ const ImportAccount = (props) => {
                 </p>
                 {
                   panel === 'import-account-edit' ? (<p>
-                    If you plan to update your public keys, ensure that your new public keys are in valid <code>EOSKey</code> format. 
-                    This is a form of public key which is prefixed with <code>EOS</code>. 
+                    If you plan to update your public keys, ensure that your new public keys are in valid <code>EOSKey</code> format.
+                    This is a form of public key which is prefixed with <code>EOS</code>.
                     This form will automatically validate your private keys if they match the new public keys.
                   </p>) : null
                 }
@@ -238,7 +238,7 @@ const ImportAccount = (props) => {
                       </FormFeedback>
                     }
                   </Col>
-                </FormGroup>               
+                </FormGroup>
                 <FormGroup row>
                   <Col sm={8}>
 

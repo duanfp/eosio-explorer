@@ -5,7 +5,7 @@ import { routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer } from 'redux-persist'
 
-import { rootReducer, rootEpic } from 'reducers';
+import { rootReducer, rootEpic } from '../reducers';
 
 import reduxPersistConfig from './redux-persist-config';
 
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'development') {
     enhancers.push(devToolsExtension());
   }
 }
-
+console.log(middleware);
 const composedEnhancers = compose(
   applyMiddleware(...middleware),
   ...enhancers
@@ -43,8 +43,10 @@ const store = createStore(
   initialState,
   composedEnhancers
 )
+console.log(store);
 export const persistor = persistStore(store);
-
+console.log(persistor);
 epicMiddleware.run(rootEpic);
+console.log(epicMiddleware);
 
 export default store;

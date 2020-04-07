@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { Col, Form, FormGroup, Label } from 'reactstrap';
 
-import isObjectEmpty from 'helpers/is-object-empty';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
 import { fetchStart } from './BlockchainInfoReducer';
-import { LoadingSpinner } from 'components';
-import { ErrorButton } from 'styled';
+import { LoadingSpinner } from '../../../../components';
+import { ErrorButton } from '../../../../styled';
 
 const BlockchainInfo = (props) => {
 
@@ -17,7 +17,7 @@ const BlockchainInfo = (props) => {
 
   let { blockchainInfo: { isFetching, data }} = props;
   let { payload = {}, error } = data;
-  
+
   return (
     <>
       { error ?

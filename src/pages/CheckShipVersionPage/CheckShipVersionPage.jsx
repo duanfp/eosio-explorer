@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import { establishWebsocketConnectionStart } from './CheckShipVersionPageReducer';
-import { CardStyled } from 'styled';
+import { CardStyled } from '../../styled';
 import styled from 'styled-components';
-import { LoadingSpinner } from 'components';
+import { LoadingSpinner } from '../../components';
 
 const PopUpTitleStyled = styled.div`
   font-size: 25px;  
@@ -55,7 +55,7 @@ class CheckShipVersionPage extends Component {
 
   constructor(props) {
     super(props);
-    let host = new URL(window._env_.NODE_PATH).hostname;    
+    let host = new URL(window._env_.NODE_PATH).hostname;
     props.establishWebsocketConnectionStart(host);
   }
 
@@ -65,28 +65,28 @@ class CheckShipVersionPage extends Component {
     return (
       <StandardTemplate>
         <div className="CheckShipVersionPage">
-          { isChecking 
+          { isChecking
             ? <InfoModalWrapper><Background /><LoadinSpinnerDivStyled><LoadingSpinner /></LoadinSpinnerDivStyled></InfoModalWrapper>
             : data.payload
               ? this.props.push(`/${this.search}`)
               : <InfoModalWrapper>
-                <WelcomeModalCard>                    
+                <WelcomeModalCard>
                   <PopUpTitleStyled>
                     Error
                   </PopUpTitleStyled>
                   <p>
                     SHiP plugin is not enabled on the node <b>{this.url}</b> you are trying to connect to.
-                  </p>                    
+                  </p>
                   <p>
                     Run the `eosio-explorer init` command again with a valid endpoint.
                   </p>
                   <p>
                     Please go through the pre-requisites on our GitHub page: <a href="https://github.com/EOSIO/eosio-explorer" target="_blank" rel="noopener noreferrer">https://github.com/EOSIO/eosio-explorer</a>
-                  </p>                   
+                  </p>
                 </WelcomeModalCard>
                 <Background />
               </InfoModalWrapper>
-          }                   
+          }
         </div>
       </StandardTemplate>
     );
@@ -95,12 +95,12 @@ class CheckShipVersionPage extends Component {
 
 export default connect(
   ({ checkShipVersionPage, endpoint, router }) => ({
-    checkShipVersionPage, 
+    checkShipVersionPage,
     endpoint,
     router
   }),
   {
     establishWebsocketConnectionStart,
     push
-  } 
+  }
 )(CheckShipVersionPage);

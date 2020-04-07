@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { ButtonPrimary, ButtonSecondary } from 'styled';
+import { ButtonPrimary, ButtonSecondary } from '../../styled';
 
 const Portal = ({ children }) => {
   const modalRoot = document.getElementById('modal');

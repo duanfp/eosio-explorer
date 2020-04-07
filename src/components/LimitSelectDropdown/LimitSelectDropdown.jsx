@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { DropdownStyled } from 'styled';
+import { DropdownStyled } from '../../styled';
 import styled from 'styled-components';
 
 const CutomDropDown = styled(DropdownStyled)`  

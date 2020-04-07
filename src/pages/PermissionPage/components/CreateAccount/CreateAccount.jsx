@@ -8,11 +8,11 @@ import cogoToast from 'cogo-toast';
 import { connect } from 'react-redux';
 
 import { fetchStart } from './CreateAccountReducer';
-import { createStart } from 'reducers/permission';
-import { panelSelect } from 'pages/PermissionPage/PermissionPageReducer';
-import useForm from 'helpers/useForm';
+import { createStart } from '../../../../reducers/permission';
+import { panelSelect } from '../../../../pages/PermissionPage/PermissionPageReducer';
+import useForm from '../../../../helpers/useForm';
 import validate from './CreateAccountValidatorEngine/CreateAccountValidatorEngine';
-import { CardStyled, OverlayStyled, CardHeaderStyled, ButtonPrimary, ButtonSecondary, InputStyled, ButtonGroupSeperated } from 'styled';
+import { CardStyled, OverlayStyled, CardHeaderStyled, ButtonPrimary, ButtonSecondary, InputStyled, ButtonGroupSeperated } from '../../../../styled';
 import styled from 'styled-components';
 
 const FirstCardStyled = styled(CardStyled)`
@@ -27,12 +27,12 @@ const CreateAccount = (props) => {
     props.fetchStart();
   }, [])
 
-  let { 
-    createAccount: { isFetching, data, }, 
+  let {
+    createAccount: { isFetching, data, },
     permission, panelSelect
   } = props;
   let { payload, error } = data;
-  let { 
+  let {
     data: { submitError, isSubmitting, creationSuccess }
   } = permission;
 
@@ -47,19 +47,19 @@ const CreateAccount = (props) => {
         activePrivateKey: payload.activePrivateKey,
         activePublicKey: payload.activePublicKey
       });
-    else 
+    else
       cogoToast.error(msg, {
         heading: 'Account Creation Denied',
         position: 'bottom-center',
         hideAfter: 2
       });
-    window.scrollTo(0, 0);  
+    window.scrollTo(0, 0);
   }
 
   return (
     <div className="CreateAccount">
       <div>
-        { 
+        {
           error         ? <Button onClick={props.fetchStart}>Retry Generation</Button>
           : <>
               <FirstCardStyled>
@@ -87,7 +87,7 @@ const CreateAccount = (props) => {
                   }
                   {
                     ((!creationSuccess) && submitError) ?
-                        <UncontrolledAlert color="danger"> 
+                        <UncontrolledAlert color="danger">
                           Error creating the account: {submitError}
                         </UncontrolledAlert>
                       : null
@@ -109,7 +109,7 @@ const CreateAccount = (props) => {
                           required
                           />
                         {
-                          errors.accountName && 
+                          errors.accountName &&
                           <FormFeedback invalid="true">
                             {errors.accountName}
                           </FormFeedback>
@@ -129,13 +129,13 @@ const CreateAccount = (props) => {
                           id="ownerPublic"
                           placeholder="Generating keys..."
                           value={
-                            values.ownerPublic 
+                            values.ownerPublic
                             || payload.ownerPublicKey
                           }
                           onInput={handleChange}
                           readOnly
                           />
-                      </Col> 
+                      </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label htmlFor="ownerPrivate" sm={2}>Private Key</Label>
@@ -168,7 +168,7 @@ const CreateAccount = (props) => {
                           onInput={handleChange}
                           readOnly
                           />
-                      </Col> 
+                      </Col>
                     </FormGroup>
                     <FormGroup row>
                       <Label htmlFor="activePrivate" sm={2}>Private Key</Label>
@@ -207,8 +207,8 @@ const CreateAccount = (props) => {
                   </Form>
                 </CardBody>
               </FirstCardStyled>
-              
-              
+
+
             </>
         }
       </div>

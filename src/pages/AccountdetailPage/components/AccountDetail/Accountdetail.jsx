@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchStart, paramsSet } from './AccountdetailReducer';
-import pathNameConsumer from 'helpers/pathname-consumer';
+import pathNameConsumer from '../../../../helpers/pathname-consumer';
 import { push } from 'connected-react-router'
 
 import { CardBody, Col, Row, Form, FormGroup } from 'reactstrap';
 import styled from 'styled-components';
-import { CodeViewer, LoadingSpinner } from 'components';
-import { CardStyled, CardHeaderStyled, ButtonPrimary, InputStyled, ErrorDivStyled } from 'styled';
+import { CodeViewer, LoadingSpinner } from '../../../../components';
+import { CardStyled, CardHeaderStyled, ButtonPrimary, InputStyled, ErrorDivStyled } from '../../../../styled';
 
 
 const FirstCardStyled = styled(CardStyled)`
@@ -50,11 +50,11 @@ const Accountdetail = (props) => {
     <div className="Accountdetail">
     <Row>
       <Col sm="12">
-        <FirstCardStyled> 
+        <FirstCardStyled>
           <CardHeaderStyled>Search Account</CardHeaderStyled>
-          <CardBody>         
+          <CardBody>
             <DivFlexStyled>
-              <SearchInputStyled 
+              <SearchInputStyled
                 placeholder="Account Name"
                 value={inputValue}
                 onKeyDown={
@@ -67,34 +67,34 @@ const Accountdetail = (props) => {
                   }
                 }
                 onChange={evt=>{setInputValue(evt.target.value)}}/>
-              <ButtonPrimary                   
+              <ButtonPrimary
                 onClick={evt=> {
                   setInputValue("")
                   if(inputValue !== "")
                     props.push('/account/'+inputValue)
                 }}>
               SEARCH</ButtonPrimary>
-            </DivFlexStyled>            
+            </DivFlexStyled>
           </CardBody>
         </FirstCardStyled>
       </Col>
     </Row>
       <div>
         { showDetailsSection &&
-          <div>                     
+          <div>
            {error
             ? <CustomErrorDiv>No Account found with Account Name {params.account_name}</CustomErrorDiv>
             : isFetching
               ? <LoadingSpinner />
-              : (Object.keys(payload).length === 0 && payload.constructor === Object) 
+              : (Object.keys(payload).length === 0 && payload.constructor === Object)
                 ? <LoadingSpinner />
                 : <div>
                     <Row>
                       <Col sm="12">
-                        <CardStyled> 
+                        <CardStyled>
                           <CardHeaderStyled>Account Detail</CardHeaderStyled>
-                          <CardBody>  
-                            <Form> 
+                          <CardBody>
+                            <Form>
                               <FormGroup row>
                                 <Col sm={2}>Account Name:</Col>
                                 <Col sm={10} className="hashText">
@@ -109,11 +109,11 @@ const Accountdetail = (props) => {
                               </FormGroup>
                               <FormGroup row>
                                 <Col sm={2}>Owner Public Key:</Col>
-                                <Col sm={10} className="hashText">                                            
-                                  {payload.permissions && 
+                                <Col sm={10} className="hashText">
+                                  {payload.permissions &&
                                     payload.permissions[0].perm_name === "owner"
                                     ? payload.permissions[0].required_auth.keys.length > 0
-                                      ? payload.permissions[0].required_auth.keys[0].key 
+                                      ? payload.permissions[0].required_auth.keys[0].key
                                       : "No Public Key"
                                     : payload.permissions && payload.permissions[1].required_auth.keys.length > 0
                                       ? payload.permissions[1].required_auth.keys[0].key
@@ -127,9 +127,9 @@ const Accountdetail = (props) => {
                                   {payload.permissions &&
                                     payload.permissions[0].perm_name === "active"
                                     ? payload.permissions[0].required_auth.keys.length > 0
-                                      ? payload.permissions[0].required_auth.keys[0].key 
+                                      ? payload.permissions[0].required_auth.keys[0].key
                                       : "No Public Key"
-                                    : payload.permissions && payload.permissions[1].required_auth.keys.length > 0 
+                                    : payload.permissions && payload.permissions[1].required_auth.keys.length > 0
                                       ? payload.permissions[1].required_auth.keys[0].key
                                       : "No Public Key"
                                   }
@@ -139,16 +139,16 @@ const Accountdetail = (props) => {
                                 ? <FormGroup row>
                                     <Col sm={2}>Smart Contract:</Col>
                                     <Col sm={10} className="hashText"> No Smart Contract </Col>
-                                  </FormGroup> 
+                                  </FormGroup>
                                 : <FormGroup row>
                                     <Col sm={2}>Smart Contract:</Col>
                                     <Col sm={10} className="hashText">
                                       <Link to={`/contract/${contractPayload.account_name}`}>
                                         {contractPayload.account_name}
-                                      </Link>                                      
+                                      </Link>
                                     </Col>
-                                  </FormGroup>     
-                              }                                                          
+                                  </FormGroup>
+                              }
                             </Form>
                           </CardBody>
                         </CardStyled>
@@ -166,13 +166,13 @@ const Accountdetail = (props) => {
                               height={600}
                             />
                           </CardBody>
-                        </CardStyled>                       
-                      </Col>  
-                    </Row>        
-                  </div> 
+                        </CardStyled>
+                      </Col>
+                    </Row>
+                  </div>
             }
           </div>
-        }                                         
+        }
       </div>
     </div>
   );

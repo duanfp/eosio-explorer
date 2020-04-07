@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
-import { CardBody, Row, Col, Form, FormGroup, FormFeedback, Label, Input, 
+import { CardBody, Row, Col, Form, FormGroup, FormFeedback, Label, Input,
   UncontrolledAlert, DropdownToggle, DropdownMenu, DropdownItem, Spinner
 } from 'reactstrap';
 
 import { updateActionToPush, prefillActionToPush, actionPush, fetchStart, fetchSmartContracts,paramsSet,fetchAbi, fetchActionData } from './PushactionPageReducer';
 import { CodeViewer, LoadingSpinner } from 'components';
-import useForm from 'helpers/useForm';
+import useForm from '../../helpers/useForm';
 import validate from './components/PushActionValidatorEngine/PushActionValidatorEngine';
-import { StandardTemplate } from 'templates';
-import { defaultSet } from 'reducers/permission';
+import { StandardTemplate } from '../../templates';
+import { defaultSet } from '../../reducers/permission';
 import Actionhistory from './components/Actionhistory';
 import styled from 'styled-components';
 import cogoToast from 'cogo-toast';
-import { fetchStart as permissionFetchStart} from 'reducers/permission';
-import { PageTitleDivStyled, CardStyled, CardHeaderStyled, ButtonGroupSeperated, ButtonPrimary, ButtonSecondary, DropdownStyled, OverlayStyled } from 'styled';
+import { fetchStart as permissionFetchStart} from '../../reducers/permission';
+import { PageTitleDivStyled, CardStyled, CardHeaderStyled, ButtonGroupSeperated, ButtonPrimary, ButtonSecondary, DropdownStyled, OverlayStyled } from '../../styled';
 
 const FirstCardStyled = styled(CardStyled)`
   border-top: solid 2px #1173a4;
@@ -85,7 +85,7 @@ const PushactionPage = (props) => {
 
   // This useEffect tracks the action object and will fire every time the action object changes
   useEffect(() => {
-    /* useForm keeps track of the push action form's values through change events, but these events only fire when the user performs an action. 
+    /* useForm keeps track of the push action form's values through change events, but these events only fire when the user performs an action.
     * This page contains asynchronous events which update the action object so we need to manually update these values after the action object has changed. */
     let vals = [
       { name: "smartContractName", value: action.act.account },
@@ -104,17 +104,17 @@ const PushactionPage = (props) => {
         hideAfter: 3.5
       });
     }
-    
+
   }, [props.pushactionPage.action])
 
-   //Change action list when smart contract is changed 
+   //Change action list when smart contract is changed
   useEffect(() => {
     if(props.pushactionPage.abi.abiData !== undefined){
       if(props.pushactionPage.abi.abiData.account_name === selectedSmartContract ){
         setActionList(props.pushactionPage.abi.abiData.abi.actions);
       }else{
         setActionList([]);
-      } 
+      }
     }
   }, [props.pushactionPage.abi.abiData])
 
@@ -138,8 +138,8 @@ const PushactionPage = (props) => {
   }, [])
 
   let { permission: { data }, pushactionPage: { action, isPushingAction, smartContracts: { smartContractsList = [] }, isFetchingSmartContract } } = props;
-  let { list, defaultId } = data;  
-  
+  let { list, defaultId } = data;
+
 
   // Get the default permission. Overwrite it with the action object's permission, if the action object has a permission.
   let selectedPermission = list.find(eachPermission => defaultId === eachPermission.account+"@"+eachPermission.permission) || {};
@@ -155,8 +155,8 @@ const PushactionPage = (props) => {
   const [actionList, setActionList] = useState([]);
   const [selectedSmartContract, setSelectedSmartContract] = useState("");
 
-  const getABIandSetActionList = (smartContract) =>{   
-    setSelectedSmartContract(smartContract); 
+  const getABIandSetActionList = (smartContract) =>{
+    setSelectedSmartContract(smartContract);
     props.paramsSet({account_name:  smartContract });
     props.fetchAbi();
   }
@@ -199,7 +199,7 @@ const PushactionPage = (props) => {
                   </UncontrolledAlert>
                 }
                 { action.error &&
-                  <UncontrolledAlert color="danger"> 
+                  <UncontrolledAlert color="danger">
                     Error(s): {action.error.error}
                   </UncontrolledAlert>
                 }
@@ -213,23 +213,23 @@ const PushactionPage = (props) => {
                         <DropdownMenu modifiers={dropdownMaxHeight}>
                           {smartContractsList &&
                             (smartContractsList).map((smartContract, index)=>
-                              <DropdownItem 
-                                key={index} 
-                                onClick={(e) => {                                   
-                                  getABIandSetActionList(smartContract.name); 
-                                  updateAction("smartContractName", action, smartContract.name, props.updateActionToPush); 
-                                  updateAction("actionType", action, "", props.updateActionToPush); 
+                              <DropdownItem
+                                key={index}
+                                onClick={(e) => {
+                                  getABIandSetActionList(smartContract.name);
+                                  updateAction("smartContractName", action, smartContract.name, props.updateActionToPush);
+                                  updateAction("actionType", action, "", props.updateActionToPush);
                                   handleChange(e);
                                   resetValidation(e);
                                 }}>
                               {smartContract.name}</DropdownItem>)}
-                        </DropdownMenu>     
+                        </DropdownMenu>
                       </CustomDropdown>
-                      
+
                       {/* Hidden inputs for validation and to make sure validation messages are shown by Bootstrap  */}
                       <Input type="hidden" id="smartContractName" name="smartContractName" value={action.act.account} onChange={(e) => { handleChange(e); } } invalid={!!errors.smartContractName} />
-                      {                        
-                        errors.smartContractName && 
+                      {
+                        errors.smartContractName &&
                         <FormFeedback invalid="true">
                           {errors.smartContractName}
                         </FormFeedback>
@@ -248,20 +248,20 @@ const PushactionPage = (props) => {
                         <DropdownMenu modifiers={dropdownMaxHeight}>
                           { actionList.length > 0 &&
                             (actionList).map((actionType)=>
-                              <DropdownItem 
-                                key={actionType.name} 
+                              <DropdownItem
+                                key={actionType.name}
                                 onClick={(e) => {
-                                  updateAction("actionType", action, actionType.name, props.updateActionToPush); 
-                                  handleChange(e); 
+                                  updateAction("actionType", action, actionType.name, props.updateActionToPush);
+                                  handleChange(e);
                                   resetValidation(e);
                                 }}>
                               {actionType.name}</DropdownItem>)}
-                        </DropdownMenu>     
+                        </DropdownMenu>
                       </CustomDropdown>
                       {/* Hidden inputs for validation and to make sure validation messages are shown by Bootstrap  */}
                       <Input type="hidden" id="actionType" name="actionType" value={action.act.name} onChange={(e) => { handleChange(e); } } invalid={!!errors.actionType} />
                       {
-                        errors.actionType && 
+                        errors.actionType &&
                         <FormFeedback invalid="true">
                           {errors.actionType}
                         </FormFeedback>
@@ -274,7 +274,7 @@ const PushactionPage = (props) => {
                     </Col>
                     <Col xs="9">
                       <CustomDropdown id="PermissionDropdown" isOpen={isOpenDropDownPermission} toggle={()=>{toggleDropDownPermission(!isOpenDropDownPermission)}}>
-                        <DropdownToggle className={errors.permission && "invalid"} caret>                        
+                        <DropdownToggle className={errors.permission && "invalid"} caret>
                           { list.filter(permission => !!permission.private_key).length < 1 ? "No Permissions Available"
                             : Object.keys(selectedPermission).length > 0
                               ? (selectedPermission.account+"@"+selectedPermission.permission === defaultId)
@@ -284,9 +284,9 @@ const PushactionPage = (props) => {
                         </DropdownToggle>
                         <DropdownMenu modifiers={dropdownMaxHeight}>
                           {(list).map( permission => permission.private_key &&
-                              <DropdownItem 
-                                key={permission.account+"@"+permission.permission} 
-                                onClick={(e) => { 
+                              <DropdownItem
+                                key={permission.account+"@"+permission.permission}
+                                onClick={(e) => {
                                   selectedPermission = list.find(p => p.account === action.act.authorization.actor && p.permission === action.act.authorization.permission) || selectedPermission;
                                   updateAction("permission", action, { actor: permission.account, permission: permission.permission }, props.updateActionToPush);
                                   resetValidation(e);
@@ -294,14 +294,14 @@ const PushactionPage = (props) => {
                                 {(defaultId === permission.account+"@"+permission.permission)
                                  ? (permission.account + '@'+ permission.permission +' (default)')
                                  : (permission.account + '@'+ permission.permission)
-                                }  
+                                }
                               </DropdownItem>)}
-                        </DropdownMenu>     
-                      </CustomDropdown>  
+                        </DropdownMenu>
+                      </CustomDropdown>
                       {/* Hidden inputs for validation and to make sure validation messages are shown by Bootstrap  */}
                       <Input type="hidden" id="permission" name="permission" value={selectedPermission.account+"@"+selectedPermission.permission || ""} onChange={(e) => { handleChange(e); } } invalid={!!errors.permission} />
                       {
-                        errors.permission && 
+                        errors.permission &&
                         <FormFeedback invalid="true">
                           {errors.permission}
                         </FormFeedback>
@@ -313,17 +313,17 @@ const PushactionPage = (props) => {
                       <Label>Payload:</Label>
                     </Col>
                     <Col xs="12">
-                      <CodeViewer 
+                      <CodeViewer
                         language="json"
-                        readOnly={false} 
-                        height="250" 
-                        value={action.payload} 
+                        readOnly={false}
+                        height="250"
+                        value={action.payload}
                         className={errors.payload && "invalid"}
-                        onChange={(newVal) => { updateAction("payload", action, newVal, props.updateActionToPush); }} 
+                        onChange={(newVal) => { updateAction("payload", action, newVal, props.updateActionToPush); }}
                       />
                       <Input type="hidden" id="payload" name="payload" value={action.payload || ""} onChange={(e) => { handleChange(e); } } invalid={!!errors.payload} />
                       {
-                        errors.payload && 
+                        errors.payload &&
                         <FormFeedback invalid="true">
                           {errors.payload}
                         </FormFeedback>
@@ -345,7 +345,7 @@ const PushactionPage = (props) => {
                     </Col>
                   </FormGroup>
                 </Form>
-              )} 
+              )}
               </CardBody>
             </FirstCardStyled>
           </Col>

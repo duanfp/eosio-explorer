@@ -5,7 +5,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
 
 import { Keygen } from 'eosjs-keygen';
-import { errorLog } from 'helpers/error-logger';
+import { errorLog } from '../../../../helpers/error-logger';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app

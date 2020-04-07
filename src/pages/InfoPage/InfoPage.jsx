@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 import { CardBody, Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import Headblock from './components/Headblock';
 import BlockchainInfo from './components/BlockchainInfo';
 import LastIrreversibleBlockInfo from './components/LastIrreversibleBlockInfo';
 import WelcomePopup from './components/WelcomePopup';
-import { CardStyled, CardHeaderStyled, PageTitleDivStyled, InputStyled} from 'styled';
+import { CardStyled, CardHeaderStyled, PageTitleDivStyled, InputStyled} from '../../styled';
 import styled from 'styled-components';
 
 const FirstCardStyled = styled(CardStyled)`
@@ -129,7 +129,7 @@ export default connect(
       }
     },
     endpoint: {path: { nodeos }}
-  } 
+  }
   ) => ({
     showWelcomePopup,
     sessionShowWelcomePopup,

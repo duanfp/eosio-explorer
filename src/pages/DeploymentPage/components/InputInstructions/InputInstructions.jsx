@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   CardBody
 } from 'reactstrap';
-import { CardStyled } from 'styled';
+import { CardStyled } from '../../../../styled';
 import styled from 'styled-components';
 
 const CardStyledNoBorder = styled(CardStyled)`

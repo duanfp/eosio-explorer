@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CardBody, Table } from 'reactstrap';
 import cogoToast from 'cogo-toast';
-import { LoadingSpinner } from 'components';
+import { LoadingSpinner } from '../../../../components';
 import { connect } from 'react-redux';
-import { fetchStart, accountImport, defaultSet } from 'reducers/permission';
-import { panelSelect } from 'pages/PermissionPage/PermissionPageReducer';
-import { RadioButtonDivStyled, CardStyled, CardHeaderStyled, ButtonPrimary, InfoDivStyled } from 'styled';
+import { fetchStart, accountImport, defaultSet } from '../../../../reducers/permission';
+import { panelSelect } from '../../../../pages/PermissionPage/PermissionPageReducer';
+import { RadioButtonDivStyled, CardStyled, CardHeaderStyled, ButtonPrimary, InfoDivStyled } from '../../../../styled';
 
 const PermissionTable = styled(Table)`
   tr {
@@ -33,12 +33,12 @@ const FirstCardStyled = styled(CardStyled)`
 
 const Permissionlist = (props) => {
 
-  let { 
+  let {
     permission: { isFetching, data },
-    panelSelect, defaultSet 
+    panelSelect, defaultSet
   } = props;
   let { list, defaultId } = data;
-  let clonedList = list.slice(0);  
+  let clonedList = list.slice(0);
 
   //Seperate Permissions based on Private keys
   let listWithPrivateKey = [];
@@ -46,7 +46,7 @@ const Permissionlist = (props) => {
   clonedList.map(eachPermission => {
     if(eachPermission.private_key !== undefined && eachPermission.private_key !== "" && eachPermission.private_key !== null){
       listWithPrivateKey.push(eachPermission);
-    }else{      
+    }else{
       listWithoutPrivateKey.push(eachPermission);
     }
     return null;
@@ -57,7 +57,7 @@ const Permissionlist = (props) => {
   }, [])
 
   function getKeysData (permissionObj, list, panel) {
-    const keysData = list.filter(acct => acct["account"] === permissionObj.account);   
+    const keysData = list.filter(acct => acct["account"] === permissionObj.account);
     let editOrImportPermission = keysData.filter(eachPermission => eachPermission.permission === permissionObj.permission );
     props.accountImport(editOrImportPermission);
     panelSelect("import-account-"+panel);
@@ -85,45 +85,45 @@ const Permissionlist = (props) => {
                                 <CardBody>
                                   <InfoDivStyled>
                                     These are your currently available accounts that possess both public and private keys. They can be
-                                    used for signing transactions and pushing actions. 
+                                    used for signing transactions and pushing actions.
                                     The <b>eosio</b> account owns the system contract responsible for numerous important functions, so please
-                                    be aware that you can not deploy new contracts locally under that permission. 
-                                    Click the "Edit" button if you want to update or check your keys for these accounts. 
+                                    be aware that you can not deploy new contracts locally under that permission.
+                                    Click the "Edit" button if you want to update or check your keys for these accounts.
                                     Click the radio button to set the default account for authorizing actions.
                                   </InfoDivStyled>
                                   <PermissionTable borderless>
                                     {
-                                      listWithPrivateKey.length > 0 
+                                      listWithPrivateKey.length > 0
                                         ? listWithPrivateKey.map((eachPermission) => (
-                                            <tbody className="accountRow" key={eachPermission.account+""+eachPermission.permission}> 
+                                            <tbody className="accountRow" key={eachPermission.account+""+eachPermission.permission}>
                                               <tr key={eachPermission.account+"@"+eachPermission.permission}>
                                                 <td width="7%">
-                                                  <div style={{marginTop: "14px"}}>                                                
+                                                  <div style={{marginTop: "14px"}}>
                                                     <RadioButtonDivStyled>
                                                       <label className="radioContainer">
                                                         <input name={eachPermission.account+"@"+eachPermission.permission}
                                                           type="radio"
                                                           checked={eachPermission.account+"@"+eachPermission.permission === defaultId ? true : false}
-                                                          onClick={() => setAsDefault( 
-                                                            eachPermission.account, 
+                                                          onClick={() => setAsDefault(
+                                                            eachPermission.account,
                                                             eachPermission.permission)}
                                                           readOnly />
                                                         <span className="checkmark"></span>
                                                       </label>
-                                                    </RadioButtonDivStyled>  
-                                                  </div>                                                  
-                                                </td>  
+                                                    </RadioButtonDivStyled>
+                                                  </div>
+                                                </td>
                                                 <td width="53%">
                                                   <div style={{marginTop: "6px"}}>
                                                     <PermissionLink to={`/account/${eachPermission.account}`}>
                                                       {eachPermission.account}@{eachPermission.permission}
                                                     </PermissionLink>
-                                                  </div>                                            
+                                                  </div>
                                                 </td>
                                                 <EditButtonCell width="40%">
-                                                  <ButtonPrimary 
+                                                  <ButtonPrimary
                                                         style={{float:'right', marginRight:'5%'}}
-                                                        onClick={() => getKeysData(eachPermission, list, "edit")}                                                        
+                                                        onClick={() => getKeysData(eachPermission, list, "edit")}
                                                         block
                                                         >
                                                         Edit
@@ -142,17 +142,17 @@ const Permissionlist = (props) => {
                                     }
                                   </PermissionTable>
                                 </CardBody>
-                              </FirstCardStyled>                              
-                              { (listWithoutPrivateKey.length > 0) 
+                              </FirstCardStyled>
+                              { (listWithoutPrivateKey.length > 0)
                                 ? <FirstCardStyled>
                                   <CardHeaderStyled>Import Account</CardHeaderStyled>
                                   <CardBody>
                                     <InfoDivStyled>
-                                      The accounts in this panel do not have private keys assigned to them yet. You can click 
-                                      the "Import Keys" button to assign your private keys to these accounts. <b>Note:</b> Be 
+                                      The accounts in this panel do not have private keys assigned to them yet. You can click
+                                      the "Import Keys" button to assign your private keys to these accounts. <b>Note:</b> Be
                                       sure that the private keys you import to the accounts here correspond to the public
                                       key fetched from the PostgresDB. Otherwise you won't be able to do anything with them, even
-                                      if you import keys. 
+                                      if you import keys.
                                     </InfoDivStyled>
                                     <PermissionTable borderless>
                                     {
@@ -163,17 +163,17 @@ const Permissionlist = (props) => {
                                             <td width="58%" style={{verticalAlign: "middle"}}>
                                               <PermissionLink to={`/account/${eachPermission.account}`}>
                                                 {eachPermission.account}@{eachPermission.permission}
-                                              </PermissionLink>                                              
+                                              </PermissionLink>
                                             </td>
                                             <EditButtonCell width="40%">
-                                              <ButtonPrimary 
+                                              <ButtonPrimary
                                                     style={{float:'right', marginRight:'5%'}}
                                                     onClick={() => getKeysData(eachPermission, list, "importer")}
                                                     block
                                                     >
                                                     Import Keys
                                                   </ButtonPrimary>
-                                            </EditButtonCell> 
+                                            </EditButtonCell>
                                           </tr>
                                         </tbody>
                                       ))

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import Blocklist from './components/Blocklist';
-import { PageTitleDivStyled } from 'styled';
+import { PageTitleDivStyled } from '../../styled';
 
 
 class BlocklistPage extends Component {
@@ -20,7 +20,7 @@ class BlocklistPage extends Component {
           </Row>
           <Row>
             <Col sm="12">
-              <Blocklist/>                
+              <Blocklist/>
             </Col>
           </Row>
         </div>

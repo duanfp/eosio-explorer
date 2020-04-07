@@ -38,7 +38,7 @@ SET_MODE=false
 NODEOS=false
 nodeos_value_passed=$NODE_DEFAULT_ENDPOINT
 nodeos_endpoint=$NODE_DEFAULT_ENDPOINT
-domain_name="localhost"
+domain_name="47.107.138.103"
 
 
 USAGE="Usage: eosio-explorer init [-s | --sample-data] [--server-mode]
@@ -48,7 +48,7 @@ USAGE="Usage: eosio-explorer init [-s | --sample-data] [--server-mode]
 where:
     -s, --sample-data   Starts the tool with pre-existing sample accounts and smart contracts
     --server-mode       Starts the tool in server-mode, it will start the docker containers but not the gui
-    --set-mode          Set mode can take the value 1, 2 or 3(e.g.: --set-mode=1), 
+    --set-mode          Set mode can take the value 1, 2 or 3(e.g.: --set-mode=1),
                         1- Connect to default Nodeos instance provided by the tool
                         2- Connect to the endpoint passed using 'nodeos_endpoint=<endpoint>' argument
                         3- Connect to the endpoint mentioned in config file (location: $HOME/eosio_explorer_config.json)
@@ -60,7 +60,7 @@ where:
 
 write_to_log()
 {
-  echo $1 >> $APP/logger.txt  
+  echo $1 >> $APP/logger.txt
 }
 
 echo "" > $APP/logger.txt
@@ -89,7 +89,7 @@ do
     --nodeos-endpoint=*|nodeos-endpoint=*)
       NODEOS=true
       nodeos_value_passed="${arg#*=}"
-      ;;    
+      ;;
     -h|--help)
       echo " "
       echo "$USAGE"
@@ -125,15 +125,15 @@ if ( ! $SET_MODE ); then
 
   echo " "
   if [ $option == 1 ]
-  then 
-    echo "Starting tool with default instance..."  
+  then
+    echo "Starting tool with default instance..."
   elif [ $option == 2 ]
-  then 
+  then
     echo "Please enter Nodeos instance endpoint:"
     read nodeos_endpoint
   elif [ $option == 3 ]
   then
-    echo "Reading the endpoint from $HOME/eosio_explorer_config.json" 
+    echo "Reading the endpoint from $HOME/eosio_explorer_config.json"
     nodeos_endpoint=$(cat $HOME/eosio_explorer_config.json | sed -n 's|.*"NodeEndpoint":"\([^"]*\)".*|\1|p')
     write_to_log "nodeos_endpoint entered: $nodeos_endpoint"
   else
@@ -143,28 +143,28 @@ else
   # If set-mode is true then read the endpoint from arguments
 
   if [ $option == 1 ]
-  then 
-    echo "Starting tool with default instance..." 
+  then
+    echo "Starting tool with default instance..."
   elif [ $option == 2 ]; then
     if ( ! $NODEOS ); then
       echo "You have passed the mode as 2 but not provided the Nodeos instance endpoint."
-      echo "please run the command again with endpoint or pass the mode as 1 to run with the default instance" 
+      echo "please run the command again with endpoint or pass the mode as 1 to run with the default instance"
       echo "To know more about options, run 'eosio-explorer init -h'"
       echo " "
       exit 1
     else
-      nodeos_endpoint=$nodeos_value_passed   
+      nodeos_endpoint=$nodeos_value_passed
     fi
   elif [ $option == 3 ]; then
-    echo "Reading the endpoint from $HOME/eosio_explorer_config.json" 
-    nodeos_endpoint=$(cat $HOME/eosio_explorer_config.json | sed -n 's|.*"NodeEndpoint":"\([^"]*\)".*|\1|p') 
-  else    
+    echo "Reading the endpoint from $HOME/eosio_explorer_config.json"
+    nodeos_endpoint=$(cat $HOME/eosio_explorer_config.json | sed -n 's|.*"NodeEndpoint":"\([^"]*\)".*|\1|p')
+  else
     echo "Invalid mode, accepted values for --set-mode argument is 1, 2 or 3."
     echo "Please run the command again with the valid mode or run 'eosio-explorer init' without --set-mode to select the mode manually"
     echo "To know more about options, run 'eosio-explorer init -h'"
     echo " "
     exit 1
-  fi     
+  fi
 fi
 
 #remove '/' at the end if any
@@ -176,26 +176,26 @@ echo "Connecting to $nodeos_endpoint"
 write_to_log "Connecting to $nodeos_endpoint"
 
 if [ $option == 2 ] || [ $option == 3 ] || [ $option == 4 ];
-then 
+then
   echo " "
   echo "========================"
   echo "VALIDATING NODE ENDPOINT"
   echo "========================"
-  blockchain_info=`curl --max-time 15 $nodeos_endpoint/v1/chain/get_info -k -s -f -o /dev/null && echo "SUCCESS" || echo "ERROR"` 
+  blockchain_info=`curl --max-time 15 $nodeos_endpoint/v1/chain/get_info -k -s -f -o /dev/null && echo "SUCCESS" || echo "ERROR"`
   echo $blockchain_info
 
   if [ $blockchain_info != "ERROR" ];
-  then 
+  then
     echo " "
     echo "========================"
     echo "CHECKING THE EOS VERSION"
     echo "========================"
     # extract version from the get_info output
-    version=$(curl -s $nodeos_endpoint/v1/chain/get_info | sed -n 's|.*"server_version_string":"\([^"]*\)".*|\1|p')  
+    version=$(curl -s $nodeos_endpoint/v1/chain/get_info | sed -n 's|.*"server_version_string":"\([^"]*\)".*|\1|p')
     echo "version $version"
-    write_to_log "eos version: $version" 
+    write_to_log "eos version: $version"
     version=${version:1:5}
-    
+
     # Check the extracted version if it's a number
     re='^[0-9.]+$'
     if ! [[ $version =~ $re ]] ; then
@@ -206,32 +206,32 @@ then
     else
       if [[ "$version" > 1.8.0 ]];
       then
-        echo "Compatible with tool"     
-        write_to_log "valid endpoint"   
+        echo "Compatible with tool"
+        write_to_log "valid endpoint"
       else
         echo " "
         printf "${RED}The EOS version of the node you are trying to connect to is not compatible with the tool, \nplease run the command again with the node endpoint running on EOS version 1.8.1 above \n ${NC}"
         echo " "
         exit 1
-      fi  
-    fi   
+      fi
+    fi
     #  remove this
     # exit 1
   else
     if [ $nodeos_endpoint == $NODE_DEFAULT_ENDPOINT ];
-    then 
+    then
       echo " "
       echo "The docker will start the Nodeos instance"
-    else 
+    else
       echo " "
       printf "${RED}Invalid node endpoint, please run the command again with a valid endpoint \n ${NC}"
       echo " "
       write_to_log "Invalid endpoint"
       exit 1
-    fi    
-  fi      
+    fi
+  fi
 fi
-  
+
 echo " "
 echo "==============================="
 echo "INITIALISING CONFIG IN PACKAGES"
@@ -253,8 +253,8 @@ echo "NODE_ENDPOINT_DOMAIN_NAME=$domain_name" >> $SHIPDOCKER/config.file.local
 
 rm -f $APP/.env.local
 echo "REACT_APP_LOCAL_SERVICE_PORT=$LOCAL_SERVICE_PORT" >> $APP/.env.local
-echo "REACT_APP_APP_SERVE_PORT=$APP_SERVE_PORT" >> $APP/.env.local 
-echo "REACT_APP_POSTGRES_DB_PORT=$POSTGRES_PORT" >> $APP/.env.local 
+echo "REACT_APP_APP_SERVE_PORT=$APP_SERVE_PORT" >> $APP/.env.local
+echo "REACT_APP_POSTGRES_DB_PORT=$POSTGRES_PORT" >> $APP/.env.local
 
 echo "LOCAL_SERVICE_PORT=$LOCAL_SERVICE_PORT" > $LOCALSERVICE/.env.local
 
@@ -308,10 +308,10 @@ then
 
   write_to_log "Created config file in $HOME directory"
   echo " "
-  echo "Path:" $HOME/eosio_explorer_config.json 
+  echo "Path:" $HOME/eosio_explorer_config.json
   echo '{"NodeEndpoint":"'$nodeos_endpoint'"}'
   echo " "
-fi  
+fi
 
 #Inserting the entered endpoint from the user to a config file to connect to from front-end
 if $ISDEV; then

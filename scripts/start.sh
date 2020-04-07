@@ -61,7 +61,7 @@ where:
 
 write_to_log()
 {
-  echo $1 >> $APP/logger.txt  
+  echo $1 >> $APP/logger.txt
 }
 write_to_log "--------------------------"
 write_to_log "Arguments passed to start:"
@@ -95,10 +95,10 @@ do
     --no-timestamp)
       NOTIMESTAMP=true
       ;;
-    --set-mode=*)      
-      ;;  
+    --set-mode=*)
+      ;;
     --nodeos-endpoint=*|nodeos-endpoint=*)
-      ;;  
+      ;;
     -h|--help)
       echo " "
       echo "$USAGE"
@@ -144,7 +144,7 @@ nodeos_endpoint=$(cat $CONFIG_FILE/eosio_explorer_config.json | sed -n 's|.*"Nod
 write_to_log "endpoint read from config file: $nodeos_endpoint"
 echo "Connecting to $nodeos_endpoint"
 
-if [ $nodeos_endpoint == $NODE_DEFAULT_ENDPOINT ] 
+if [ $nodeos_endpoint == $NODE_DEFAULT_ENDPOINT ]
 then
   echo " "
   echo "=============================="
@@ -164,7 +164,7 @@ then
               --silent \
               --head \
               --fail \
-              localhost:8888/v1/chain/get_info)
+              47.107.138.103:8888/v1/chain/get_info)
   do
     if [[ "$waitcounter" -lt 10 ]]; then
       echo " "
@@ -228,9 +228,9 @@ if ( ! $SERVERMODE ); then
     fi
   else
     # If there is -d or from init setup ( or clear browser storage ), clear the browser storage by setting CLEARBROWSERSTORAGE=true while serve.
-    if $CLEARBROWSERSTORAGE; then  
+    if $CLEARBROWSERSTORAGE; then
       ./start_gui.sh --clear-browser-storage
-    else      
+    else
       ./start_gui.sh
     fi
   fi

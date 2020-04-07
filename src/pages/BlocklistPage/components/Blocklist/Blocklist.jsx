@@ -3,9 +3,9 @@ import { CardBody, Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
 import styled from 'styled-components';
-import isObjectEmpty from 'helpers/is-object-empty';
-import { LoadingSpinner, LimitSelectDropdown } from 'components';
-import { CardStyled,CardHeaderStyled, TableStyled, ButtonPrimary, ErrorButton, CheckBoxDivStyled, InputStyled } from 'styled';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
+import { LoadingSpinner, LimitSelectDropdown } from '../../../../components';
+import { CardStyled,CardHeaderStyled, TableStyled, ButtonPrimary, ErrorButton, CheckBoxDivStyled, InputStyled } from '../../../../styled';
 
 import { pollingStart, pollingStop, filterToggle, recordsUpdate } from './BlocklistReducer';
 

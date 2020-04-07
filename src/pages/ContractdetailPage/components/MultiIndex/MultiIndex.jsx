@@ -8,12 +8,12 @@ import { push } from 'connected-react-router'
 
 import { CardBody, DropdownToggle, DropdownMenu, DropdownItem, Row, Col} from 'reactstrap';
 import styled from 'styled-components';
-import { CodeViewer, LoadingSpinner } from 'components';
-import isObjectEmpty from 'helpers/is-object-empty';
-import { DropdownStyled, CardStyled, CardHeaderStyled, ErrorDivStyled, ErrorButton, InputStyled, ButtonPrimary, ToolTipUncontrolledStyled } from 'styled';
+import { CodeViewer, LoadingSpinner } from '../../../../components';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
+import { DropdownStyled, CardStyled, CardHeaderStyled, ErrorDivStyled, ErrorButton, InputStyled, ButtonPrimary, ToolTipUncontrolledStyled } from '../../../../styled';
 
-const ToolTipSVG = () => 
-  <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">   
+const ToolTipSVG = () =>
+  <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
     <g id="Final-Version" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="Artboard" transform="translate(-93.000000, -44.000000)">
           <g id="Group-15" transform="translate(93.000000, 44.000000)">
@@ -53,7 +53,7 @@ const MultiIndex = (props) => {
   const [dropDownSelctedValue, setSelectedValue] = useState("Select Table");
   const [showDetailsSection, setShowDetailsSection ] = useState(false);
   const [ isOpenDropDown, toggleDropDown] = useState(false);
-  const [ scopeName, setScopeName] = useState(props.abiData.account_name);  
+  const [ scopeName, setScopeName] = useState(props.abiData.account_name);
 
   let { multiIndex: { isFetching, data, params } } = props;
   let { payload, error } = data;
@@ -69,14 +69,14 @@ const MultiIndex = (props) => {
               <DropdownToggle caret>{dropDownSelctedValue}</DropdownToggle>
               <DropdownMenu right>
                 {(abiData.abi.tables).map((eachTable)=>
-                    <DropdownItem 
-                      key={eachTable.name} 
-                      onClick={()=>{ 
-                        setSelectedValue(eachTable.name);                          
+                    <DropdownItem
+                      key={eachTable.name}
+                      onClick={()=>{
+                        setSelectedValue(eachTable.name);
                       }}>
                     {eachTable.name}</DropdownItem>)}
-              </DropdownMenu>     
-            </DropdownStyled>  
+              </DropdownMenu>
+            </DropdownStyled>
           </DropdownDiv>
         </Col>
         <Col sm={6}>
@@ -88,8 +88,8 @@ const MultiIndex = (props) => {
               trigger="hover focus"
               autohide={true}>
               Default value of Scope name is set to Smart Contract name, change it if you want to fetch from different scope
-              </ToolTipUncontrolledStyled>     
-            <ScopeInputStyled 
+              </ToolTipUncontrolledStyled>
+            <ScopeInputStyled
               value={scopeName}
               onKeyDown={
                 evt => {
@@ -97,7 +97,7 @@ const MultiIndex = (props) => {
                     if(dropDownSelctedValue !== "Select Table"){
                       props.paramsSet({contract_name: abiData.account_name, table_name: dropDownSelctedValue, scope_name: scopeName || abiData.account_name });
                       props.fetchStart();
-                      setShowDetailsSection(true);  
+                      setShowDetailsSection(true);
                     }
                   }
                 }
@@ -110,21 +110,21 @@ const MultiIndex = (props) => {
               onClick={evt => {
                 props.paramsSet({contract_name: abiData.account_name, table_name: dropDownSelctedValue, scope_name: scopeName || abiData.account_name });
                 props.fetchStart();
-                setShowDetailsSection(true);                               
+                setShowDetailsSection(true);
               }}>
               Get Data
-            </ButtonPrimary>  
+            </ButtonPrimary>
           </ScopeDivStyled>
         </Col>
-      </Row>   
-      <br />            
+      </Row>
+      <br />
       {error
-        ? 
+        ?
           <>
             {!isObjectEmpty(error) && <p className="text-danger">{JSON.stringify(error)}</p>}
             <ErrorButton onClick={props.fetchStart}>Connection error, click to reload</ErrorButton>
           </>
-        : isFetching 
+        : isFetching
           ? <LoadingSpinner />
           : showDetailsSection
             ? payload.length === 0
@@ -139,10 +139,10 @@ const MultiIndex = (props) => {
                         readOnly={true}
                         height={600}
                       />
-                    </CardBody>        
-                  </CardStyled>   
+                    </CardBody>
+                  </CardStyled>
                 </div>
-              :<div></div>}         
+              :<div></div>}
     </div>
   );
 }

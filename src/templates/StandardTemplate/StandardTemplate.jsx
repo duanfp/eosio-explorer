@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 
-import { Header, Footer, HelpFAB, ConsoleLogger } from 'components';
+import { Header, Footer, HelpFAB, ConsoleLogger } from '../../components';
 import styled from 'styled-components';
 
 import {

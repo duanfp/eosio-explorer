@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { Col, Form, FormGroup, Label } from 'reactstrap';
 
-import isObjectEmpty from 'helpers/is-object-empty';
-import { pollingStart } from 'reducers/headblock';
-import { LoadingSpinner } from 'components';
-import { ErrorButton } from 'styled';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
+import { pollingStart } from '../../../../reducers/headblock';
+import { LoadingSpinner } from '../../../../components';
+import { ErrorButton } from '../../../../styled';
 
 const Headblock = (props) => {
 

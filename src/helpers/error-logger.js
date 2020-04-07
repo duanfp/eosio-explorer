@@ -1,5 +1,5 @@
 import store from 'store';
-import { logStart } from 'reducers/errorlog';
+import { logStart } from '../reducers/errorlog';
 
 export const errorLog = (...obj) => {
   if (obj) {

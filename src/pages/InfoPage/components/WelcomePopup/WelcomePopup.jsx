@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { CardStyled, ButtonPrimary, PageTitleDivStyled, CheckBoxDivStyled } from 'styled';
+import { CardStyled, ButtonPrimary, PageTitleDivStyled, CheckBoxDivStyled } from '../../../../styled';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 

@@ -9,13 +9,13 @@ import { throwError, of } from 'rxjs';
 import { mergeMap, map, catchError, delay } from 'rxjs/operators';
 
 import { combineEpics, ofType } from 'redux-observable';
-import apiPostgres from 'services/api-postgres';
-import apiRpc from 'services/api-rpc';
-import paramsToQuery from 'helpers/params-to-query';
-import { errorLog } from 'helpers/error-logger';
+import apiPostgres from '../services/api-postgres';
+import apiRpc from '../services/api-rpc';
+import paramsToQuery from '../helpers/params-to-query';
+import { errorLog } from '../helpers/error-logger';
 
 
-// IMPORTANT 
+// IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app
 const actionPrefix = `permission/`;
 
@@ -82,7 +82,7 @@ const createAccountObservable = (
     })),
     catchError(err => throwError(err))
   )
-  
+
 const editAccountObservable = query => {
   //get parent of the current permission to be edited
   return apiRpc("get_account_details",{account_name: query.account_name})
@@ -90,7 +90,7 @@ const editAccountObservable = query => {
       mergeMap(res => {
         let index = res.permissions.findIndex(eachPermission => eachPermission.perm_name === query.permission);
         if(index > -1){
-          query["parent"] = res.permissions[index].parent;         
+          query["parent"] = res.permissions[index].parent;
           return apiRpc("update_auth", query)
             .pipe(
               map(res => res),
@@ -98,7 +98,7 @@ const editAccountObservable = query => {
             )
         }else{
           return throwError({"message": `Parent not found for the permission ${query.permission}`});
-        }          
+        }
       }),
     catchError(error => throwError(error))
   )
@@ -119,7 +119,7 @@ const createEpic = action$ => action$.pipe(
       return createAccountObservable(query, ownerPrivateKey, activePrivateKey, accountName)
         .pipe(
           delay(1000),
-          mergeMap(response => { 
+          mergeMap(response => {
             let query = paramsToQuery({account_name: response.accountName});
             return apiPostgres(`get_all_permissions${query}`).pipe(
               map(res => createFulfilled({
@@ -201,7 +201,7 @@ const dataInitState = {
 }
 
 const reinitializedState = (oldList) => {
-  let eosioPerms = oldList.filter(el => 
+  let eosioPerms = oldList.filter(el =>
     el.account === 'eosio' && (el.permission === "active" || "owner") && el.public_key === "EOS5GnobZ231eekYUJHGTcmy2qve1K23r5jSFQbMfwWTtPB7mFZ1L" && el.private_key
   );
   return {
@@ -228,7 +228,7 @@ const alphabeticalSort = (a, b) => {
 
 const hasPrivateKey = (item) => {
   return (!!item.private_key);
-}  
+}
 
 const formatPublicKey = (public_key) =>{
   return public_key.substring(public_key.indexOf("(")+1, public_key.indexOf(","));
@@ -245,7 +245,7 @@ const initializeDefaultId = (stateId, list) => {
   let eosio_active = list.filter(
     el => el.private_key && el.account === 'eosio' && el.permission === 'active'
   )[0];
-  //Check and get current default permission   
+  //Check and get current default permission
   let currentDefault = list.filter(el => el.account+"@"+el.permission === stateId)[0];
   //Get first permission
   let firstPermission = list.filter(el => el.private_key)[0];
@@ -255,7 +255,7 @@ const initializeDefaultId = (stateId, list) => {
   }else{
     newDefaultId = firstPermission.account+"@"+firstPermission.permission;
   }
-  
+
   //Check if the default permission set before exists, if not set either eosio owner or active permission as default
   //If eosio permissions doesn't exists then get the first permission and set as default permission
   //If no permission exist, then set empty string as to defaultId
@@ -270,15 +270,15 @@ const initializeDefaultId = (stateId, list) => {
 
 const composePermissionList = (originalList = [], payloadList = []) => {
   // Check if any keys were deleted using `updateauth`
-  let clonedList = originalList.slice(0);  
+  let clonedList = originalList.slice(0);
   let newList = clonedList.filter(
     item => {
       return hasPrivateKey(item);
     }
   );
   payloadList.map(function(el) {
-    //Extract public key 
-    el.public_key = el.public_key.substring(el.public_key.indexOf("(")+1, el.public_key.indexOf(","));  
+    //Extract public key
+    el.public_key = el.public_key.substring(el.public_key.indexOf("(")+1, el.public_key.indexOf(","));
 
     let index = newList.findIndex(eachItem => el.account === eachItem.account && el.permission === eachItem.permission);
     if (index >= 0) {
@@ -287,7 +287,7 @@ const composePermissionList = (originalList = [], payloadList = []) => {
         newList[index].private_key = null;
       }
     } else {
-      if (el.account === 'eosio' && el.private_key === undefined && el.public_key && 
+      if (el.account === 'eosio' && el.private_key === undefined && el.public_key &&
         (el.permission === 'owner' || el.permission === 'active')) {
         /**
          * If the eosio account made from our tool is initialized state and has no private key in local storage,
@@ -296,11 +296,11 @@ const composePermissionList = (originalList = [], payloadList = []) => {
          */
         if (el.public_key === "EOS5GnobZ231eekYUJHGTcmy2qve1K23r5jSFQbMfwWTtPB7mFZ1L") {
           el.private_key = "5Jr65kdYmn33C3UabzhmWDm2PuqbRfPuDStts3ZFNSBLM7TqaiL";
-        }       
+        }
       }
       if(newList.length < MAX_ACCOUNT_TO_SHOW)
-        newList.push(el); 
-        
+        newList.push(el);
+
     }
     return null;
   });
@@ -324,14 +324,14 @@ const storeNewAccount = (createResponse, list) => {
   let msg = `Successfully created the account for ${accountName}`;
 
   if (queryData && queryData.length > 0) {
-    
+
     queryData.map(eachAccount =>{
       eachAccount.public_key = eachAccount.public_key.substring(eachAccount.public_key.indexOf("(")+1, eachAccount.public_key.indexOf(","));
       eachAccount.private_key = (eachAccount.permission === 'owner') ? ownerPrivateKey : activePrivateKey;
     });
 
     // queryData[0]["private_key"] = (queryData[0].permission === 'owner') ? ownerPrivateKey : activePrivateKey;
-    // queryData[1]["private_key"] = (queryData[1].permission === 'owner') ? ownerPrivateKey : activePrivateKey;    
+    // queryData[1]["private_key"] = (queryData[1].permission === 'owner') ? ownerPrivateKey : activePrivateKey;
   } else {
     msg = `Created the account for ${accountName} but failed to query the
        account after creation. Please import the keys you just used in the previous
@@ -363,10 +363,10 @@ const updateAccountList = (createResponse, list, defaultId) => {
 
   if (queryData && queryData.length > 0) {
     let index = updatedList.findIndex(item => item.account === accountName && item.permission === permission);
-    let updatedAccount = queryData.filter(el => el.permission === permission)[0];    
+    let updatedAccount = queryData.filter(el => el.permission === permission)[0];
     updatedList[index].public_key = formatPublicKey(updatedAccount.public_key);
     updatedList[index].private_key = privateKey;
-        
+
   } else {
     msg = `Updated the keys for ${accountName} but failed to query the
        account after creation. Please import the keys you just used in the previous

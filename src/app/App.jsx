@@ -7,27 +7,27 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 import TagManager from 'react-gtm-module';
 
-import InfoPage from 'pages/InfoPage';
-import BlocklistPage from 'pages/BlocklistPage';
-import BlockdetailPage from 'pages/BlockdetailPage';
-import TransactionlistPage from 'pages/TransactionlistPage';
-import TransactiondetailPage from 'pages/TransactiondetailPage';
-import ActionlistPage from 'pages/ActionlistPage';
-import ActiondetailPage from 'pages/ActiondetailPage';
-import AccountdetailPage from 'pages/AccountdetailPage';
-import ContractdetailPage from 'pages/ContractdetailPage';
-import PermissionPage from 'pages/PermissionPage';
-import DeploymentPage from 'pages/DeploymentPage';
-import PushactionPage from 'pages/PushactionPage';
-import CheckShipVersionPage from 'pages/CheckShipVersionPage';
-import NotFound404Page from 'pages/NotFound404Page';
+import InfoPage from '../pages/InfoPage';
+import BlocklistPage from '../pages/BlocklistPage';
+import BlockdetailPage from '../pages/BlockdetailPage';
+import TransactionlistPage from '../pages/TransactionlistPage';
+import TransactiondetailPage from '../pages/TransactiondetailPage';
+import ActionlistPage from '../pages/ActionlistPage';
+import ActiondetailPage from '../pages/ActiondetailPage';
+import AccountdetailPage from '../pages/AccountdetailPage';
+import ContractdetailPage from '../pages/ContractdetailPage';
+import PermissionPage from '../pages/PermissionPage';
+import DeploymentPage from '../pages/DeploymentPage';
+import PushactionPage from '../pages/PushactionPage';
+import CheckShipVersionPage from '../pages/CheckShipVersionPage';
+import NotFound404Page from '../pages/NotFound404Page';
 
-import { WillRoute } from 'hocs';
-import { connectStart } from 'reducers/endpoint';
-import { fetchStart as permissionFetchStart} from 'reducers/permission';
-import { pollingStart as headblock_pollingStart} from 'reducers/headblock';
-import { pollingStart as lastblockinfo_pollingStart } from 'reducers/lastblockinfo';
-import { fetchStart as blockchaininfo_fetchstart } from 'pages/InfoPage/components/BlockchainInfo/BlockchainInfoReducer';
+import { WillRoute } from '../hocs';
+import { connectStart } from '../reducers/endpoint';
+import { fetchStart as permissionFetchStart} from '../reducers/permission';
+import { pollingStart as headblock_pollingStart} from '../reducers/headblock';
+import { pollingStart as lastblockinfo_pollingStart } from '../reducers/lastblockinfo';
+import { fetchStart as blockchaininfo_fetchstart } from '../pages/InfoPage/components/BlockchainInfo/BlockchainInfoReducer';
 
 const prodTagManagerArgs = {
   gtmId: process.env.REACT_APP_PROD_GTM_ID
@@ -76,7 +76,7 @@ class App extends Component {
           <WillRoute exact path="/push-action" component={ PushactionPage }/>
           <WillRoute exact path="/check-ship" component={ CheckShipVersionPage }/>
           <WillRoute exact path="/page-not-found" component={ NotFound404Page }/>
-          
+
           <Redirect to="/" />
         </Switch>
       </div>

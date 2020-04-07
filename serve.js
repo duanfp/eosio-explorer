@@ -49,8 +49,8 @@ app.listen(PORT, ()=>{
   console.log(`Listening ${process.env.MODE !== `development`  ? `static \`build/\` folder and ` : `` }API calls on port ${PORT} in production mode.`);
   console.log(``);
   if(`${process.env.MODE}` !== `development`){
-    let url;   
-    url = "http://localhost:" + PORT +"/check-ship";      
+    let url;
+    url = "http://47.107.138.103:" + PORT +"/check-ship";
     console.log(`Application is ready on http://localhost:${PORT}.`);
     console.log(`You can now view EOSIO Labs™: EOSIO Explorer in the browser.`);
     openBrowser(url);

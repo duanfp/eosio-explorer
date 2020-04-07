@@ -5,9 +5,9 @@ import { Row, Col, CardTitle, Form } from 'reactstrap';
 import styled from 'styled-components';
 import { push } from 'connected-react-router'
 import { fetchStart, smartContractNameSearch, recordsUpdate } from './ActionlistReducer';
-import { LoadingSpinner, LimitSelectDropdown } from 'components';
-import isObjectEmpty from 'helpers/is-object-empty';
-import { TableStyled, ButtonPrimary, InputStyled, ErrorButton } from 'styled';
+import { LoadingSpinner, LimitSelectDropdown } from '../../../../components';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
+import { TableStyled, ButtonPrimary, InputStyled, ErrorButton } from '../../../../styled';
 
 const FormStyled = styled(Form)`
   display: flex;

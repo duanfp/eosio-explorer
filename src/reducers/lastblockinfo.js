@@ -9,8 +9,8 @@ import { interval, of} from 'rxjs';
 import { switchMap, mapTo, map, takeUntil, catchError, delay, startWith, exhaustMap } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
 
-import apiRpc from 'services/api-rpc';
-import { errorLog } from 'helpers/error-logger';
+import apiRpc from '../services/api-rpc';
+import { errorLog } from '../helpers/error-logger';
 
 // IMPORTANT
 // Must modify action prefix since action types must be unique in the whole app

@@ -5,9 +5,9 @@ import { push } from 'connected-react-router'
 import { pollingStart, pollingStop, recordsUpdate } from './TransactionlistReducer';
 import { Row, Col, CardTitle, CardBody } from 'reactstrap';
 import styled from 'styled-components';
-import isObjectEmpty from 'helpers/is-object-empty';
-import { LimitSelectDropdown, LoadingSpinner } from 'components';
-import { CardStyled, CardHeaderStyled, TableStyled, ButtonPrimary, ErrorButton, InputStyled } from 'styled';
+import isObjectEmpty from '../../../../helpers/is-object-empty';
+import { LimitSelectDropdown, LoadingSpinner } from '../../../../components';
+import { CardStyled, CardHeaderStyled, TableStyled, ButtonPrimary, ErrorButton, InputStyled } from '../../../../styled';
 
 
 const FirstCardStyled = styled(CardStyled)`
@@ -83,7 +83,7 @@ const Transactionlist = (props) => {
                           </tr>
                         </thead>
                         <tbody className="hashText">
-                          {(isPolling) 
+                          {(isPolling)
                           ? <tr><td colSpan="3" className="text-center"><LoadingSpinner /></td></tr>
                           : (payload.length < 1)
                             ? <tr><td colSpan="3" className="text-center">No transactions found</td></tr>

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { combineEpics, ofType } from 'redux-observable';
 import { mergeMap, map, catchError  } from 'rxjs/operators';
 import { of } from 'rxjs';
-import checkWs from "helpers/check-ws-conn"
+import checkWs from "../../helpers/check-ws-conn"
 
 
 
@@ -30,7 +30,7 @@ const shipversionCheckEpic = (action$, state$) => action$.pipe(
         console.log("error connecting to ship plugin")
         return of(establishWebsocketConnectionRejected("error"))
       })
-    )       
+    )
   })
 );
 

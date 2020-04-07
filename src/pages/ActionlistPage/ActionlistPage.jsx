@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { CardBody, Col, Row } from 'reactstrap';
 
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import Actionlist from './components/Actionlist';
-import { PageTitleDivStyled } from 'styled';
-import { CardStyled, CardHeaderStyled } from 'styled';
+import { PageTitleDivStyled } from '../../styled';
+import { CardStyled, CardHeaderStyled } from '../../styled';
 import styled from 'styled-components';
 
 const FirstCardStyled = styled(CardStyled)`

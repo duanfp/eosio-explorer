@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 
-import { StandardTemplate } from 'templates';
+import { StandardTemplate } from '../../templates';
 import Accountdetail from './components/AccountDetail';
-import { PageTitleDivStyled } from 'styled';
+import { PageTitleDivStyled } from '../../styled';
 
 class AccountdetailPage extends Component {
 
@@ -21,7 +21,7 @@ class AccountdetailPage extends Component {
             <Col sm="12">
               <Accountdetail/>
             </Col>
-          </Row>          
+          </Row>
         </div>
       </StandardTemplate>
     );

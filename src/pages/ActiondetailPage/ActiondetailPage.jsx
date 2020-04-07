@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { CardBody, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router'
-import { LoadingSpinner } from 'components';
-import { StandardTemplate } from 'templates';
+import { LoadingSpinner } from '../../components';
+import { StandardTemplate } from '../../templates';
 import { fetchStart, paramsSet } from './ActiondetailPageReducer';
 import Actiondetail from './components/Actiondetail';
 import Actionjson from './components/Actionjson';
 import styled from 'styled-components';
-import isObjectEmpty from 'helpers/is-object-empty';
-import { PageTitleDivStyled, CardStyled, CardHeaderStyled, ErrorButton, ErrorDivStyled, ButtonPrimary } from 'styled';
+import isObjectEmpty from '../../helpers/is-object-empty';
+import { PageTitleDivStyled, CardStyled, CardHeaderStyled, ErrorButton, ErrorDivStyled, ButtonPrimary } from '../../styled';
 
 const FirstCardStyled = styled(CardStyled)`
   border-top: solid 2px #1173a4;
@@ -27,7 +27,7 @@ const ActiondetailPage = (props) => {
 
   let { actiondetailPage: { data, isFetching, params } } = props;
   let { payload, error } = data;
-  
+
   return (
     <StandardTemplate>
       <div className="ActiondetailPage">
@@ -35,16 +35,16 @@ const ActiondetailPage = (props) => {
           <Col xs="12">
             <PageTitleDivStyled>Actions | Action Detail Page</PageTitleDivStyled>
           </Col>
-        </Row>       
+        </Row>
           { error ?
             <>
               {!isObjectEmpty(error) && <p className="text-danger">{JSON.stringify(error)}</p>}
               <ErrorButton onClick={props.fetchStart}>Connection error, click to reload</ErrorButton>
             </>
-          : isFetching 
+          : isFetching
             ? <LoadingSpinner />
             : payload && payload.length > 0
-                ? <> 
+                ? <>
                     <Row>
                       <Col xs="12">
                         <FirstCardStyled>
@@ -52,7 +52,7 @@ const ActiondetailPage = (props) => {
                             Action Detail
                           </CardHeaderStyled>
                           <CardBody>
-                            <Actiondetail/> 
+                            <Actiondetail/>
                           </CardBody>
                         </FirstCardStyled>
                       </Col>
@@ -69,17 +69,17 @@ const ActiondetailPage = (props) => {
                         </CardStyled>
                       </Col>
                     </Row>
-                  </>    
+                  </>
                 : <CardStyled>
                     <CardHeaderStyled></CardHeaderStyled>
                     <CardBody>
                       <ErrorDivStyled>No Action found with Transaction ID '{params.id}' and Action ordinal '{params.action_ordinal}'<br/><br/>
                         <ButtonPrimary
                           onClick={evt=> props.push(`/action-list`)}>Back
-                        </ButtonPrimary>           
-                      </ErrorDivStyled>           
+                        </ButtonPrimary>
+                      </ErrorDivStyled>
                     </CardBody>
-                  </CardStyled>                  
+                  </CardStyled>
           }
       </div>
     </StandardTemplate>
